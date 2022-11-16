@@ -11,26 +11,27 @@ int mqtt_pub(){
 	struct mosquitto * mosq;
 
 
-	mosquitto_lib_init();
+	mosquitto_lib_init(); // Must be called before any other mosquitto functions.
 
-	mosq = mosquitto_new("mqttTeste", true, NULL);
+	mosq = mosquitto_new("mqttTeste", true, NULL); // Create a new mosquitto client instance.
 
-	mosquitto_username_pw_set(mosq, username, password);
-	rc = mosquitto_connect(mosq, ip_address, 1883, 60);
+	mosquitto_username_pw_set(mosq, username, password); // Configure username and password for a mosquitto instance. 
+	rc = mosquitto_connect(mosq, ip_address, 1883, 60); // Connect to an MQTT broker.
 
 	if(rc != 0){
 		printf("Erro ao conectar com o broker: Erro %d\n", rc);
-		mosquitto_destroy(mosq);
+		mosquitto_destroy(mosq); // Use to free memory associated with a mosquitto client instance.
 		return -1;
 	}
 	printf("Sucesso na conexão\n");
 
-	mosquitto_publish(mosq, NULL, "dado", 32, "teste/publish", 0, false);
+	mosquitto_publish(mosq, NULL, "dado", 32, "teste/publish", 0, false); // Publish a message on a given topic.
+    // "dado" é o tópico, 32 é o tamanho do payload (bytes) e "teste/publish" é o dado enviado
 
-	mosquitto_disconnect(mosq);
+	mosquitto_disconnect(mosq); // Disconnect from the broker.
 	mosquitto_destroy(mosq);
 
-	mosquitto_lib_cleanup();
+	mosquitto_lib_cleanup(); // Call to free resources associated with the library.
 	return 0;
 }
 
@@ -57,8 +58,8 @@ int mqtt_sub(){
 	struct mosquitto *mosq;
 
 	mosq = mosquitto_new("mqtt/teste", true, &id);
-	mosquitto_connect_callback_set(mosq, on_connect);
-	mosquitto_message_callback_set(mosq, on_message);
+	mosquitto_connect_callback_set(mosq, on_connect); // Set the connect callback. 
+	mosquitto_message_callback_set(mosq, on_message); // Set the message callback. 
 
 	mosquitto_username_pw_set(mosq, username, password);
 	rc = mosquitto_connect(mosq, ip_address, 1883, 60);
@@ -68,8 +69,8 @@ int mqtt_sub(){
 		return -1;
 	}
 
-	mosquitto_loop_start(mosq);
-	mosquitto_loop_stop(mosq, true);
+	mosquitto_loop_start(mosq); // This is part of the threaded client interface. 
+	mosquitto_loop_stop(mosq, true); // This is part of the threaded client interface. 
 
 	mosquitto_disconnect(mosq);
 	mosquitto_destroy(mosq);
