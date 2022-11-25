@@ -12,7 +12,10 @@
 /* Caso desejar utilizar outro broker MQTT, substitua o endereco abaixo */
 #define MQTT_ADDRESS   "tcp://10.0.0.101:1883"
 /* Substitua este por um ID unico em sua aplicacao */
-#define CLIENTID       "TestClientSubscribe" 
+#define CLIENTID       "TestClientSubscribe"
+
+#define USERNAME "aluno"
+#define PASSWORD "@luno*123"
 
 /* Substitua aqui os topicos de publish e subscribe por topicos exclusivos de sua aplicacao */
 #define MQTT_PUBLISH_TOPIC     "pbl3/teste"
@@ -71,8 +74,8 @@ int main(int argc, char *argv[])
 {
    int rc;
    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
-	conn_opts.username = "aluno";
-	conn_opts.password = "@luno*123";
+	conn_opts.username = USERNAME;
+	conn_opts.password = PASSWORD;
    /* Inicializacao do MQTT (conexao & subscribe) */
    MQTTClient_create(&client, MQTT_ADDRESS, CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
    MQTTClient_setCallbacks(client, NULL, NULL, on_message, NULL);
