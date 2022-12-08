@@ -35,6 +35,9 @@ Vale lembrar que para receber as atualizações nos tópicos inscritos, o client
 
 ### 3.2 Raspberry pi zero
 
+Continuamos usando o display LCD para a exibição dos dados recebidos através da UART, os valores recebidos são exibidos de forma sequencial em um intervalo de tempo definido pelo usuario,
+
+
 ### 3.3 Interface remota
 
 
