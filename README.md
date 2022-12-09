@@ -3,10 +3,12 @@
 ### Integrantes: Daniel Costa, Diego Silva e Thiago Menezes
 
 ## 1. Introdução 
+Vários tipos de protocolos de comunicação estão sendo utilizados no mundo atualmente principalmente no mundo da Internet of Things (IOT). 
+
 
 ## 2. Ambiente e Ferramentas
 
-Para trabalhar com o nodeMCU foi utilizado o `Arduino IDE` e para os arquivos da interface remota(HTML,CSS,Javacript) e Raspberry PI Zero usamos o `Visual studio code`. São remanescentes do projeto anterior, o display lcd Hitachi HD44780U para a exibição dos dados.os botões para controle do intervalo de tempo e os sensores digitais simulados por um push button e o analógico por um potenciômetro, ambos conectados ao nodeMCU(ESP8266), informações sobre as bibliotecas e funções que tambem foram utilizadas no problema 2 podem ser lidas no repositório do mesmo : https://github.com/MI-SD-TEC499/Problema02-Sensores/edit/main/README.md.
+Para trabalhar com o nodeMCU(ESP8266) foi utilizado o `Arduino IDE` e para os arquivos da interface remota (HTML,CSS,Javacript) e Raspberry PI Zero usamos o `Visual studio code`. São remanescentes do projeto anterior, o display lcd Hitachi HD44780U para a exibição dos dados, os botões para controle do intervalo de tempo e os sensores digitais simulados por um push button e o analógico por um potenciômetro, ambos conectados ao nodeMCU, informações sobre as bibliotecas e funções que tambem foram utilizadas no problema 2 podem ser lidas no repositório do mesmo, juntamente com as informações de como configurar a IDE para poder realizar a comunicação com o nodeMCU: https://github.com/MI-SD-TEC499/Problema02-Sensores/edit/main/README.md.
 
 ## 3. Desenvolvimento
 
@@ -68,5 +70,6 @@ sleep(2);
 O código acima mostra o formato de exibição dos dados no display LCD.
 
 ### 3.3 Interface remota
+
 
 
