@@ -51,7 +51,7 @@ Tanto `client.subscribe` quanto `client.publish` são da biblioteca `pubsubclien
 
 A raspberry PI continua usando o display LCD para a exibição dos dados recebidos da NodeMCU(estado atual do botão, valor do potenciômetro e intervalo de tempo), os valores são exibidos de forma sequencial e são atualizados com base no delay(em segundos), que pode ser alterado pelo usuario utilizando os botões para dimunuir/aumentar o tempo do intervalo.
 
-``c
+```c
 comando = 0x08;
 lcdPosition(lcd,0,0);
 send_to_node(comando);
