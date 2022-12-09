@@ -6,7 +6,7 @@
 
 ## 2. Ambiente e Ferramentas
 
-Para trabalhar com o nodeMCU foi utilizado o `Arduino IDE` e para os arquivos da interface remota(HTML,CSS,Javacript) e Raspberry PI usamos o `Visual studio code`
+Para trabalhar com o nodeMCU foi utilizado o `Arduino IDE` e para os arquivos da interface remota(HTML,CSS,Javacript) e Raspberry PI Zero usamos o `Visual studio code`. São remanescentes do projeto anterior, o display lcd Hitachi HD44780U para a exibição dos dados.os botões para controle do intervalo de tempo e os sensores digitais simulados por um push button e o analógico por um potenciômetro, ambos conectados ao nodeMCU(ESP8266), informações sobre as bibliotecas e funções que tambem foram utilizadas no problema 2 podem ser lidas no repositório do mesmo : https://github.com/MI-SD-TEC499/Problema02-Sensores/edit/main/README.md.
 
 ## 3. Desenvolvimento
 
@@ -14,7 +14,9 @@ Para trabalhar com o nodeMCU foi utilizado o `Arduino IDE` e para os arquivos da
 
 O projeto gira em torno da comunicação da interface remota e da nodeMCU com broker : 
 
+![image](https://user-images.githubusercontent.com/111393549/206805086-a4084bf9-8318-4a09-b39b-5a604e94e8b6.png)
 
+O display LCD presente na raspberry pi exibe os dados recebidos pela nodeMCU através da UART e envia os dados referentes ao intervalo de atualização, a interface remota e a nodeMCU se conectam com o broker, inicialmente realizando uma inscricão e depois publicando/recebendo atualizações no tópico.
 
 ### 3.2 NodeMCU (ESP8266)
 
@@ -22,10 +24,11 @@ O módulo da NodeMCU continua com as funções do projeto 2(leitura dos botões 
 comunicação com o `broker` :
 ```c
 #include <PubSubClient.h>
-const char *mqtt_broker = "10.0.0.101";    //Host do broket
-const char *topic = "pbl3/teste";          //Topico a ser subscrito e publicado
-const char *mqtt_username = "aluno";       //Usuario
-const char *mqtt_password = "@luno*123";   //Senha
+cconst char mqtt_broker = "10.0.0.101";    //Host do broket
+const chartopic = "pbl3/envia";            //Topico a ser publicado
+const char subtopic = "pbl3/recebe";       //Topico a ser subscrito 
+const charmqtt_username = "aluno";         //Usuario
+const char mqtt_password = "@luno123";     //Senha
 const int mqtt_port = 1883;                //Porta
 ```
 Devido aos problemas encontrados com a biblioteca `mosquitto` , foi definido que a NodeMCU funcionaria como "ponte" entre a raspberry Pi e o broker 
@@ -47,6 +50,22 @@ Tanto `client.subscribe` quanto `client.publish` são da biblioteca `pubsubclien
 ### 3.2 Raspberry pi zero
 
 A raspberry PI continua usando o display LCD para a exibição dos dados recebidos da NodeMCU(estado atual do botão, valor do potenciômetro e intervalo de tempo), os valores são exibidos de forma sequencial e são atualizados com base no delay(em segundos), que pode ser alterado pelo usuario utilizando os botões para dimunuir/aumentar o tempo do intervalo.
+
+``c
+comando = 0x08;
+lcdPosition(lcd,0,0);
+send_to_node(comando);
+sleep(2);
+receive_from_node();
+sleep(2);
+lcdPosition(lcd,0,7);
+comando = 0x03;
+send_to_node(comando);
+sleep(2);
+receive_from_node();           
+sleep(2);
+```
+O código acima mostra o formato de exibição dos dados no display LCD.
 
 ### 3.3 Interface remota
 
