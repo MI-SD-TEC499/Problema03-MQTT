@@ -32,10 +32,10 @@ void print_display(unsigned char *resposta){
 
     int code = resposta[0]; //variável auxiliar 
     switch(code){
-	    case 0x00: //caso a comunicação com a NodeMCU esteja funcionando corretamente
+	case 0x00: //caso a comunicação com a NodeMCU esteja funcionando corretamente
 	        lcdPrintf(lcd,"NODEMCU: ON");    
-	    break;
-	    case 0x09: //caso a comunicação com a NodeMCU não esteja funcionando corretamente
+	break;
+	case 0x09: //caso a comunicação com a NodeMCU não esteja funcionando corretamente
         	lcdPrintf(lcd,"NODEMCU: OFF");    
         break;
         case 0x01: //exibição do valor obtido do potênciomento
@@ -59,6 +59,16 @@ void print_display(unsigned char *resposta){
 	    break;
     }
 }
+ void scanButton (int button){
+  if (digitalRead (button) == HIGH){    // Low is pushed
+    return; 
+  }
+  while (digitalRead (button) == LOW){    // Wait for release
+    tempo = tempo + 1000;
+    delay (10); 
+  }
+}
+
 
 /*
 * Função que acessa o diretório especificado e retorna o file descriptor da UART
@@ -189,35 +199,33 @@ int main(void) {
     lcd = lcdInit (2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0, 0); //pinando o display
     
     while(aux==0){ 
-                 sleep(2);
-                 comando = 0x08;
-                 send_to_node(comando);
-                 sleep(2);
-                receive_from_node();
-                
                 sleep(2);
+                comando = 0x08;
+                lcdPosition(lcd,0,0);
+                send_to_node(comando);
+                sleep(2);
+                receive_from_node();
+                sleep(2);
+                lcdPosition(lcd,0,7);
                 comando = 0x03;
                 send_to_node(comando);
-                 sleep(2);
+                sleep(2);
                 receive_from_node();
                 sleep(2);
             //caso para realizar a leitura do sensor analogico
+                lcdPosition(lcd,1,0);
                 comando = 0x04;
-
                 send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
                 sleep(2);
                 receive_from_node();
                 sleep(2);
-
   	//caso para realizar a leitura do sensor de umidade 
-		 comando = 0x01;
-
+                lcdPosition(lcd,1,7);
+		comando = 0x01;  
                 send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
                 sleep(2);
                 receive_from_node();
-
-
-        }
+    }
     
 	    
     close_serial_port(); //encerrando a porta serial de comunicação
