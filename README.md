@@ -76,21 +76,21 @@ Para a criação da interface remota foi utilizada a linguagem de marcação HTM
 No arquivo index.html é onde se encontra a parte de exibição da interface remota, foi possível a criar inputs para que o usuário consiga informar a qual tópico do MQTT ele irá receber as informações, juntamente com um botão para enviar essa informação, além de outros dois inputs, um para estabelecer o tópico de envio dos dados e outro com o valor que dejesa enviar, junto com um botão para mandar essa informação.
 
 ```html
-    		<label for="subscribe">Subscribe</label>
-		<input type="text" id="subscribe" />
-		<button id="subscribe-button">Send</button>
+  <label for="subscribe">Subscribe</label>
+  <input type="text" id="subscribe" />
+  <button id="subscribe-button">Send</button>
 
-		<label for="topic">Topic</label>
-		<input type="text" id="topic" />
-		<label for="message">Send Message</label>
-		<input type="text" id="message" />
-		<button id="send-button">Send</button>
+  <label for="topic">Topic</label>
+  <input type="text" id="topic" />
+  <label for="message">Send Message</label>
+  <input type="text" id="message" />
+  <button id="send-button">Send</button>
 ```
 
 Para a exibição dos dados recebidos da nodeMCU foi utilizada a biblioteca [Chart.js](https://www.chartjs.org/docs/latest/), essa biblioteca cria um gráficos com as informações definidas, no nosso caso sendo a umidade(simulada por um botão), a temperatura(simulada por um botão) e o potênciomentro.
 
 ```js
-const linechart = new Chart(ctx, {
+  const linechart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ['', '', '', '', '', '', '', '', '', ''],
