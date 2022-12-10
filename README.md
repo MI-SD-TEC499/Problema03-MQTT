@@ -217,10 +217,10 @@ Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exib
 
 ## 6. Referências
 
-[Wiring pi](http://wiringpi.com/)\n
-[PubSubClient](https://github.com/knolleary/pubsubclient)\n
-[ChartJS](https://www.chartjs.org/docs/latest/)\n
-[Eclipse paho](https://www.eclipse.org/paho/index.php?page=clients/js/index.php)\n
+* [Wiring pi](http://wiringpi.com/)
+* [PubSubClient](https://github.com/knolleary/pubsubclient)
+* [ChartJS](https://www.chartjs.org/docs/latest/)
+* [Eclipse paho](https://www.eclipse.org/paho/index.php?page=clients/js/index.php)
 
 
 
