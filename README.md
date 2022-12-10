@@ -9,7 +9,9 @@ Com base nesse conceito alteramos nosso projeto anterior para que seja realizada
 
 ## 2. Ambiente e Ferramentas
 
-Para trabalhar com o nodeMCU(ESP8266) foi utilizado o `Arduino IDE` , para os arquivos da interface remota (HTML,CSS,Javacript) e Raspberry PI Zero usamos o `Visual studio code`. São remanescentes do projeto anterior, o display lcd Hitachi HD44780U para a exibição dos dados, os botões para controle do intervalo de tempo e os sensores digitais simulados por um push button e o analógico por um potenciômetro, ambos conectados ao nodeMCU, informações sobre as bibliotecas e funções que tambem foram utilizadas no problema 2 podem ser lidas no repositório do mesmo, juntamente com as informações de como configurar a IDE para poder realizar a comunicação com o nodeMCU: https://github.com/MI-SD-TEC499/Problema02-Sensores/edit/main/README.md.
+Para trabalhar com o nodeMCU(ESP8266) foi utilizado o `Arduino IDE` , para os arquivos da interface remota (HTML,CSS,Javacript) e Raspberry PI Zero usamos o `Visual studio code`. São remanescentes do projeto anterior, o display lcd Hitachi HD44780U para a exibição dos dados, os botões para controle do intervalo de tempo e os sensores digitais simulados por um push button e o analógico por um potenciômetro, ambos conectados ao nodeMCU, informações sobre as bibliotecas e funções que tambem foram utilizadas no problema 2 podem ser lidas no repositório do mesmo, juntamente com as informações de como configurar a IDE para poder realizar a comunicação com o nodeMCU: [Repositório Problema 2](https://github.com/MI-SD-TEC499/Problema02-Sensores/edit/main/README.md).
+
+Todos os arquivos referentes a interfece remota se encontram nesse outro repositório em função de uma melhor organização de códigos: [Interface Remota Problema 3](https://github.com/MI-SD-TEC499/Interface-Web-MQTT)
 
 ## 3. Desenvolvimento
 
@@ -214,10 +216,11 @@ Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exib
 ![image](https://user-images.githubusercontent.com/38465439/206821148-187f3705-790c-4624-b328-65a86795e24c.png)
 
 ## 6. Referências
-Wiring pi:    http://wiringpi.com/
-PubSubClient: https://github.com/knolleary/pubsubclient
-ChartJS:      https://www.chartjs.org/docs/latest/
-Eclipse paho: https://www.eclipse.org/paho/index.php?page=clients/js/index.php
+
+[Wiring pi](http://wiringpi.com/)
+[PubSubClient](https://github.com/knolleary/pubsubclient)
+[ChartJS](https://www.chartjs.org/docs/latest/)
+[Eclipse paho](https://www.eclipse.org/paho/index.php?page=clients/js/index.php)
 
 
 
