@@ -71,5 +71,109 @@ O código acima mostra o formato de exibição dos dados no display LCD.
 
 ### 3.3 Interface remota
 
+Para a criação da interface remota foi utilizada a linguagem de marcação HTML para exibição do dados que foram enviados pela nodeMCU. Para uma melhor organização do projeto, os códigos referentes a exibição remota foi armazenada em outro repositório: [Repositório Interface Remota](https://github.com/MI-SD-TEC499/Interface-Web-MQTT).
 
+No arquivo index.html é onde se encontra a parte de exibição da interface remota, foi possível a criar inputs para que o usuário consiga informar a qual tópico do MQTT ele irá receber as informações, juntamente com um botão para enviar essa informação, além de outros dois inputs, um para estabelecer o tópico de envio dos dados e outro com o valor que dejesa enviar, junto com um botão para mandar essa informação.
 
+```html
+    <label for="subscribe">Subscribe</label>
+		<input type="text" id="subscribe" />
+		<button id="subscribe-button">Send</button>
+
+		<label for="topic">Topic</label>
+		<input type="text" id="topic" />
+		<label for="message">Send Message</label>
+		<input type="text" id="message" />
+		<button id="send-button">Send</button>
+```
+
+Para a exibição dos dados recebidos da nodeMCU foi utilizada a biblioteca [Chart.js](https://www.chartjs.org/docs/latest/), essa biblioteca cria um gráficos com as informações definidas, no nosso caso sendo a umidade(simulada por um botão), a temperatura(simulada por um botão) e o potênciomentro.
+
+```js
+const linechart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['', '', '', '', '', '', '', '', '', ''],
+        datasets: [
+          {
+            label: 'Temperatura',
+            data: temperature,
+            borderWidth: 1
+          },
+          {
+            label: 'Umidade',
+            data: umidity,
+            borderWidth: 1
+          },
+          {
+            label: 'Potenciômetro',
+            data: potenciometer,
+            borderWidth: 1
+          },
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+      }
+    });
+```
+
+No arquivo index.js é onde se encontra toda a parte de conexão com o MQTT e a nodeMCU. Para a conexão foi utilizada a biblioteca [Eclipse Paho JavaScript Client](https://www.eclipse.org/paho/index.php?page=clients/js/index.php), onde definimos dados em sua classe como o host, a porta utilizada, o username e a senha do broker para que a conexão seja estabelecida com sucesso.
+
+```js
+  class PahoHandler {
+    //definindo configurações para a conexão ao MQTT
+    constructor(host, port, clientId) {
+      this.host = host;
+      this.port = port;
+      this.clientId = clientId;
+      this.client = new Paho.MQTT.Client(this.host, this.port, this.clientId);
+      this.client.connect({
+        userName: "username_exempo",
+        password: "senha_exemplo",
+        onSuccess: this.onSuccess,
+        timeout: 3,
+      });
+    }
+```
+
+Para poder criar a conexão com o broker criamos o objeto do PahoHandler para poder executar as ações:
+
+```js
+  const pahoHandler = new PahoHandler('exemplo_IP', exemplo_porta, "clientjs");
+```
+
+Com isso temos as funções de subscribe para se inscrever no tópico que foi informado pelo usuário, e temos a função send para enviar a mensagem que o usuário deseja.
+
+```js
+  pahoHandler.subscribe(subscribeInput.value);
+```
+
+```js
+  pahoHandler.send(topicInput.value, messageInput.value);
+```
+
+E a função que fica recebendo a mensagem do nodeMCU sempre que ele enviar e atualizando o gráfico com as informações recebidas:
+
+```js
+const onMessage = (message) => {
+      var payload = message.payloadString;
+      splited = payload.split(";"); //separando os valores recebidos no array
+      if (umidity.length == 10) {
+        umidity.shift();
+        temperature.shift();
+        potenciometer.shift();
+      }
+      //adicionando o valor recebido no gráfico
+      umidity.push(Number(splited[0]));
+      temperature.push(Number(splited[1]));
+      potenciometer.push(Number(splited[2]));
+
+      linechart.update(); //atualizando o gráfico
+    };
+```
+## 4. Executando o projeto
