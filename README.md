@@ -185,8 +185,9 @@ Para que o arquivo `NodeMCU.ino` seja executado corretamente, é necessário que
 
 ### 4.2 Raspberry pi Zero
 
-O usuário deve se conectar utilizando o SSH, acessar o diretório dos arquivos (TEC477/TP03/G01) e executar os arquivos usando o makefile presente no repositório.
+O usuário deve se conectar utilizando o SSH, acessar o diretório dos arquivos (TEC477/TP03/G01) e executar os arquivos usando o makefile presente no repositório. Utilizando o comando `make all`.
 
 ### 4.3 Interface remota
 
+Para a execução da interface remota só é necessário realizar o download dos códigos presentes no [repositório](https://github.com/MI-SD-TEC499/Interface-Web-MQTT), e abrir o arquivo `index.html` com o seu navegador padrão. 
 
