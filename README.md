@@ -212,3 +212,13 @@ Nos dois casos a exibição será a mesma, porém para testes de funcionalidade 
 Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exibir os valores de acordo com a variação que acontecer na variáveis de temperatura, umidade e potênciomentro.
 
 ![image](https://user-images.githubusercontent.com/38465439/206821148-187f3705-790c-4624-b328-65a86795e24c.png)
+
+## 6. Referências
+Wiring pi:    http://wiringpi.com/
+PubSubClient: https://github.com/knolleary/pubsubclient
+ChartJS:      https://www.chartjs.org/docs/latest/
+Eclipse paho: https://www.eclipse.org/paho/index.php?page=clients/js/index.php
+
+
+
+
