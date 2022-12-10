@@ -16,19 +16,20 @@
 #define LCD_D5  27              //Data pin 5
 #define LCD_D6  28              //Data pin 6
 #define LCD_D7  29              //Data pin 7
+#define BUTTON3 25              //Button 3
 
 struct termios g_tty;
 int g_fd;
 uint8_t l_buff[256];
 uint32_t l_len_buff = 256;
-int tempo = 10000;
+int tempo = 10;
 int lcd; //variável para manipulação do lcd
 
 /*
 * Função para exibição de dados no displau LCD
 */
 void print_display(unsigned char *resposta){
-        lcdClear(lcd);
+       
 
     int code = resposta[0]; //variável auxiliar 
     switch(code){
@@ -42,8 +43,19 @@ void print_display(unsigned char *resposta){
             resposta[0] = ' ';
         	lcdPrintf(lcd,"P: %c", resposta);
         break;
+	case 0x02:
+		if(resposta[1] == 1){
+            		lcdPrintf(lcd,"T: ON");
+		}else{
+			lcdPrintf(lcd,"T: OFF");
+		}
+	break;
         case 0x03: //exibição do valor obtido do sensor de umidade
-            lcdPrintf(lcd,"Botao: ON");
+		if(resposta[1] == 1){
+            		lcdPrintf(lcd,"U: ON");
+		}else{
+			lcdPrintf(lcd,"U: OFF");
+		}
         break;
         case 0x04: //exibindo quando a led da NodeMCU fica ativada
         	lcdPrintf(lcd,"LED: ON");
@@ -52,13 +64,17 @@ void print_display(unsigned char *resposta){
         	lcdPrintf(lcd,"LED: OFF");
        break;
        case 0x07:
-       	lcdPrintf(lcd,"T: %c", resposta);
+       	lcdPrintf(lcd,"Tempo: %c", resposta);
        break;
         default: //caso aconteça algum erro
         	lcdPrintf(lcd,"ERRO");        
 	    break;
     }
 }
+
+/*
+* Função para verificação do estado do botão
+*/
  void scanButton (int button){
   if (digitalRead (button) == HIGH){    // Low is pushed
     return; 
@@ -199,6 +215,8 @@ int main(void) {
     lcd = lcdInit (2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0, 0); //pinando o display
     
     while(aux==0){ 
+	    scanButton(BUTTON3);
+	    //caso para enviar o valor do tempo para o nodeMCU
                 sleep(2);
                 comando = 0x08;
                 lcdPosition(lcd,0,0);
@@ -206,25 +224,37 @@ int main(void) {
                 sleep(2);
                 receive_from_node();
                 sleep(2);
-                lcdPosition(lcd,0,7);
+	    
+	     lcdClear(lcd);
+	    //caso para verificar a situação do nodeMCU
+                lcdPosition(lcd,0,0);
                 comando = 0x03;
                 send_to_node(comando);
                 sleep(2);
                 receive_from_node();
                 sleep(2);
             //caso para realizar a leitura do sensor analogico
-                lcdPosition(lcd,1,0);
+                lcdPosition(lcd,7,0);
                 comando = 0x04;
                 send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
                 sleep(2);
                 receive_from_node();
                 sleep(2);
   	//caso para realizar a leitura do sensor de umidade 
-                lcdPosition(lcd,1,7);
+                lcdPosition(lcd,0,1);
 		comando = 0x01;  
                 send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
                 sleep(2);
                 receive_from_node();
+	    	sleep(2);
+	//caso para realizar a leitura do sensor de temperatura
+                lcdPosition(lcd,7,1);
+		comando = 0x02;  
+                send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+                sleep(2);
+                receive_from_node();    
+	    
+	     lcdClear(lcd);
     }
     
 	    
