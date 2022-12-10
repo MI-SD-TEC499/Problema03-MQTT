@@ -76,7 +76,7 @@ Para a criação da interface remota foi utilizada a linguagem de marcação HTM
 No arquivo index.html é onde se encontra a parte de exibição da interface remota, foi possível a criar inputs para que o usuário consiga informar a qual tópico do MQTT ele irá receber as informações, juntamente com um botão para enviar essa informação, além de outros dois inputs, um para estabelecer o tópico de envio dos dados e outro com o valor que dejesa enviar, junto com um botão para mandar essa informação.
 
 ```html
-    <label for="subscribe">Subscribe</label>
+    		<label for="subscribe">Subscribe</label>
 		<input type="text" id="subscribe" />
 		<button id="subscribe-button">Send</button>
 
