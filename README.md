@@ -3,7 +3,8 @@
 ### Integrantes: Daniel Costa, Diego Silva e Thiago Menezes
 
 ## 1. Introdução 
-Vários tipos de protocolos de comunicação estão sendo utilizados no mundo atualmente principalmente no mundo da Internet of Things (IOT). 
+Vários tipos de protocolos de comunicação estão sendo utilizados no mundo atualmente, principalmente no mundo da Internet of Things (IOT),  MQTT é um desses protocolos, sua forma simples e eficiente de distribuição de mensagens acabou o tornando extremamente popular, ele é baseado em clientes que se inscrevem em um tópico para publicar e receber atualizações, servindo como alternativa eficaz ao método cliente/servidor.
+Com base nesse conceito alteramos nosso projeto anterior para que seja realizada a implementação do protocolo MQTT, com o objetivo de tornar possível  a visualização de das informações dos sensores para os dispositivos que estejam conectados ao servidor central(broker).
 
 
 ## 2. Ambiente e Ferramentas
@@ -195,7 +196,7 @@ Para a execução da interface remota só é necessário realizar o download dos
 
 Para testar o funcionamento do projeto foram realizados alguns testes para as funcionalidades presentes.
 
-### 4.1 Interface remota
+### 5.1 Interface remota
 
 Na interface remota foram testadas de duas formas diferentes, com o broker presente no laboratório LEDS e com um broker disponível gratuitamente online. 
 Para executar o teste com o broker online deve substituir a linha do broker do laboratório pela apresentada abaixo: 
