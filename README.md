@@ -177,3 +177,16 @@ const onMessage = (message) => {
     };
 ```
 ## 4. Executando o projeto
+
+### 4.1 NodeMCU
+
+Para que o arquivo `NodeMCU.ino` seja executado corretamente, é necessário que a biblioteca PubSubClient seja adicionada, o restante do processo de execução é o mesmo feito no problema 2(autenticação com o login e senha da WIFI e escolha da porta na interface do arduino IDE) vale lembrar que como as informações relacionadas ao broker estão na NodeMCU será preciso mudar os dados no arquivo caso as credenciais do broker sejam alteradas.
+
+
+### 4.2 Raspberry pi Zero
+
+O usuário deve se conectar utilizando o SSH, acessar o diretório dos arquivos (TEC477/TP03/G01) e executar os arquivos usando o makefile presente no repositório.
+
+### 4.3 Interface remota
+
+
