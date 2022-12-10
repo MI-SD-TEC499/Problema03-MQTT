@@ -191,3 +191,23 @@ O usuário deve se conectar utilizando o SSH, acessar o diretório dos arquivos 
 
 Para a execução da interface remota só é necessário realizar o download dos códigos presentes no [repositório](https://github.com/MI-SD-TEC499/Interface-Web-MQTT), e abrir o arquivo `index.html` com o seu navegador padrão. 
 
+## 5. Testes de Funcionamento
+
+Para testar o funcionamento do projeto foram realizados alguns testes para as funcionalidades presentes.
+
+### 4.1 Interface remota
+
+Na interface remota foram testadas de duas formas diferentes, com o broker presente no laboratório LEDS e com um broker disponível gratuitamente online. 
+Para executar o teste com o broker online deve substituir a linha do broker do laboratório pela apresentada abaixo: 
+
+```js
+  const pahoHandler = new PahoHandler('test.mosquitto.org', 8080, "clientjs");
+```
+
+Nos dois casos a exibição será a mesma, porém para testes de funcionalidade é um pouco diferente. Utilizando o broker do laboratório, as informações serão recebidas através da conexão com o nodeMCU, definindo o subscribe como `pbl3/envia` e o topic como `pbl3/recebe`, com o send mensage com um valor inteiro para definir o tempo de requisição. Para o teste com o broker remoto informado acima é necessário colocar o tópico de subscribe e o topic com os mesmo valores por exemplo: `pbl3/teste` e o valor de send mensage com os valores para a temperatura, umidade e potênciomentro, separados por ";".
+
+![image](https://user-images.githubusercontent.com/38465439/206821051-e6896cce-d9bb-4332-8a57-f4deedaf1576.png)
+
+Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exibir os valores de acordo com a variação que acontecer na variáveis de temperatura, umidade e potênciomentro.
+
+![image](https://user-images.githubusercontent.com/38465439/206821148-187f3705-790c-4624-b328-65a86795e24c.png)
