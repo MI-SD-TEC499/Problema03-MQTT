@@ -29,10 +29,10 @@ O módulo da NodeMCU continua com as funções do projeto 2(leitura dos botões 
 comunicação com o `broker` :
 ```c
 #include <PubSubClient.h>
-cconst char mqtt_broker = "10.0.0.101";    //Host do broket
-const chartopic = "pbl3/envia";            //Topico a ser publicado
+const char mqtt_broker = "10.0.0.101";    //Host do broket
+const char topic = "pbl3/envia";            //Topico a ser publicado
 const char subtopic = "pbl3/recebe";       //Topico a ser subscrito 
-const charmqtt_username = "aluno";         //Usuario
+const char mqtt_username = "aluno";         //Usuario
 const char mqtt_password = "@luno123";     //Senha
 const int mqtt_port = 1883;                //Porta
 ```
