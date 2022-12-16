@@ -37,7 +37,7 @@ const char mqtt_password = "@luno123";     //Senha
 const int mqtt_port = 1883;                //Porta
 ```
 Devido aos problemas encontrados com a biblioteca `mosquitto` , foi definido que a NodeMCU funcionaria como "ponte" entre a raspberry Pi e o broker 
-(usamos a uart para a troca de informações entre o SBC e o NodeMcu), para a implementação do MQTT foi utilizada
+(usamos a UART para a troca de informações entre a Raspberry e a NodeMCU), para a implementação do MQTT foi utilizada
 a biblioteca `PubSubClient`, primeiro criamos um objeto do tipo PubSubClient :
 
 ```c
@@ -259,7 +259,7 @@ Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exib
 
 ### 5.1 Interface local
 
-Testamos a interface local comparando os valores enviados pela node com os valores exibidos no display.
+Testamos a interface local comparando os valores enviados pela node com os valores exibidos no display utilizando os botões.
 
 Temperatura sem o botão pressionado :
 
