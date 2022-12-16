@@ -57,20 +57,62 @@ Tanto `client.subscribe` quanto `client.publish` são da biblioteca `pubsubclien
 A raspberry PI continua usando o display LCD para a exibição dos dados recebidos da NodeMCU(estado atual do botão, valor do potenciômetro e intervalo de tempo), os valores são exibidos de forma sequencial e são atualizados com base no delay(em segundos), que pode ser alterado pelo usuario utilizando os botões para dimunuir/aumentar o tempo do intervalo.
 
 ```c
-comando = 0x08;
-lcdPosition(lcd,0,0);
-send_to_node(comando);
-sleep(2);
-receive_from_node();
-sleep(2);
-lcdPosition(lcd,0,7);
-comando = 0x03;
-send_to_node(comando);
-sleep(2);
-receive_from_node();           
-sleep(2);
+while(aux==0){
+
+     while(buttonLoop==0){
+  	scanButton(BUTTON3);
+	scanButton(BUTTON2);
+     }
+
+    printf("menu :%d\n" ,menu);
+    switch(menu){
+    	//Temperatura
+    	case 1:  
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x02;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);
+	break;
+	
+	//Umidade
+	case 2:
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x01;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);  
+	break;
+    
+        //Potenciometro
+    	case 3:
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x04;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);    
+	break;
+	default:
+	  lcdClear(lcd);
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x08;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);
+	  menu=0;
+	break;
+    
+    }
+    
+    buttonLoop=0;	   
+
+}
 ```
-O código acima mostra o formato de exibição dos dados no display LCD.
+O código acima mostra o formato de exibição dos dados no display LCD, começando pelo status do botão da temperatura e terminando com o valor do intervalo de tempo.
 
 ### 3.3 Interface remota
 
@@ -188,7 +230,7 @@ Para que o arquivo `NodeMCU.ino` seja executado corretamente, é necessário que
 
 ### 4.2 Raspberry pi Zero
 
-O usuário deve se conectar utilizando o SSH, acessar o diretório dos arquivos (TEC499/TP03/G01) e executar os arquivos usando o makefile presente no repositório. Utilizando o comando `make all`.
+O usuário deve se conectar utilizando o SSH, acessar o diretório dos arquivos (TEC499/TP03/G01) e executar os arquivos usando o makefile presente no repositório. Utilizando o comando `make all`, para exibir as informações no display deve ser usado o botão 3, e o botão 2 para incrementar o intervalo de tempo.
 
 ### 4.3 Interface remota
 
