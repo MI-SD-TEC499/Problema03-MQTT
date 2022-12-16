@@ -16,75 +16,109 @@
 #define LCD_D5  27              //Data pin 5
 #define LCD_D6  28              //Data pin 6
 #define LCD_D7  29              //Data pin 7
-#define BUTTON3 25              //Button 3
+#define BUTTON2 24              //Button 2
+#define BUTTON3 25	        //Button 3
 
 struct termios g_tty;
 int g_fd;
 uint8_t l_buff[256];
 uint32_t l_len_buff = 256;
-int tempo = 10;
-int lcd; //variável para manipulação do lcd
+int lcd,buttonLoop=0,menu,tempoAux=10,button2Loop=0;
 
 /*
 * Função para exibição de dados no displau LCD
 */
-void print_display(unsigned char *resposta){
-       
 
-    int code = resposta[0]; //variável auxiliar 
+void send_to_node(uint8_t comando);
+void receive_from_node(); 
+
+void scanButton (int button){
+
+  
+  if(button==24){
+     if (digitalRead (button) == HIGH){ // Low is pushed
+        return ;
+     }
+     while (digitalRead (button) == LOW){       // Wait for release
+        delay (10) ;
+	tempoAux++;
+	lcdClear(lcd);
+          lcdPosition(lcd,0,0);
+          send_to_node(0x09); //leitura do resultado obtido pela comunicação com a NodeMCU
+          sleep(1);
+          receive_from_node();
+          sleep(1);
+        // delay(1000);
+      }
+      
+  printf("Botão pressionado\n");    
+  }
+
+  if(button==25){
+     if (digitalRead (button) == HIGH){ // Low is pushed
+        return ;
+     }
+     while (digitalRead (button) == LOW){       // Wait for release
+        delay (10) ;
+        // delay(1000);
+        lcdClear(lcd);
+      }
+      buttonLoop=1;
+      menu++;
+   }
+
+
+}
+
+
+void print_display(uint8_t *resposta){
+    int code = resposta[0]; //variável auxiliar
+    printf("Valor recebido :%d \n", resposta[1]-48); 
     switch(code){
 	case 0x00: //caso a comunicação com a NodeMCU esteja funcionando corretamente
 	        lcdPrintf(lcd,"NODEMCU: ON");    
-	break;
+        break;
 	case 0x09: //caso a comunicação com a NodeMCU não esteja funcionando corretamente
         	lcdPrintf(lcd,"NODEMCU: OFF");    
         break;
         case 0x01: //exibição do valor obtido do potênciomento
-            resposta[0] = ' ';
-        	lcdPrintf(lcd,"P: %c", resposta);
+            //resposta[0] = 0;
+        	lcdPrintf(lcd,"Potenciometro:%d", resposta[1]);
         break;
-	case 0x02:
-		if(resposta[1] == 1){
-            		lcdPrintf(lcd,"T: ON");
-		}else{
-			lcdPrintf(lcd,"T: OFF");
+        case 0x02: //exibição do valor obtido do sensor de temperatura
+        	//resposta[0] = 0;
+		if(resposta[1] == 49){
+                lcdPrintf(lcd,"Temperatura: ON");}
+		else{
+		   lcdPrintf(lcd, "Temperatura: OFF");
 		}
-	break;
+        break;
         case 0x03: //exibição do valor obtido do sensor de umidade
-		if(resposta[1] == 1){
-            		lcdPrintf(lcd,"U: ON");
-		}else{
-			lcdPrintf(lcd,"U: OFF");
-		}
+        	//resposta[0] = 0;
+		if(resposta[1] == 49){
+            lcdPrintf(lcd,"Umidade: OFF");}
+		else{
+		lcdPrintf(lcd, "Umidade: ON");
+	}
         break;
         case 0x04: //exibindo quando a led da NodeMCU fica ativada
-        	lcdPrintf(lcd,"LED: ON");
+        	lcdPrintf(lcd,"LED: OFF");
         break;
         case 0x05: //exibindo quando a led da NodeMCU fica desativada
-        	lcdPrintf(lcd,"LED: OFF");
-       break;
-       case 0x07:
-       	lcdPrintf(lcd,"Tempo: %c", resposta);
-       break;
+        	lcdPrintf(lcd,"LED: ON");
+	break;
+	case 0x07:
+        	tempoAux = resposta[1];
+		lcdPrintf(lcd,"Tempo: %dS", tempoAux);
+	break;
+	case 0x08:
+		lcdPrintf(lcd,"Conectado ao broker");
+	break;
         default: //caso aconteça algum erro
         	lcdPrintf(lcd,"ERRO");        
 	    break;
     }
 }
-
-/*
-* Função para verificação do estado do botão
-*/
- void scanButton (int button){
-  if (digitalRead (button) == HIGH){    // Low is pushed
-    return; 
-  }
-  while (digitalRead (button) == LOW){    // Wait for release
-    tempo = tempo + 1000;
-    delay (10); 
-  }
-}
-
 
 /*
 * Função que acessa o diretório especificado e retorna o file descriptor da UART
@@ -163,42 +197,42 @@ static void close_serial_port(void) {
 /*
 * Função para enviar um vetor para a NodeMCU 
 */
-void send_to_node(unsigned char comando){
-    unsigned char auxTest[8]; //vetor para auxilio na manipulação
-    unsigned char *ponteiro;
-
+void send_to_node(uint8_t comando){
+    uint8_t auxTest[8]; //vetor para auxilio na manipulação
+    uint8_t *ponteiro;
+	for(int i =0; i<8;i++){
+		auxTest[i] = 0;
+	}
     ponteiro = &auxTest[0]; //ponteiro apontando para primeiro item da lista, de indice 0
     *ponteiro++ = comando; //no indice 1 coloca o parametro comando    
     
     file_write_data(g_fd,&auxTest[0],sizeof(auxTest)); //função para envio do vetor
-    
-    if(comando == 0x08){
-        *ponteiro++ = tempo; //no indice 2 coloca o parametro tempo
-        file_write_data(g_fd,&auxTest[1],sizeof(auxTest)); //função para envio do vetor
-    }
 }
 
 /*
 * Função para receber uma resposta da NodeMCU 
 */
 void receive_from_node(){
-    unsigned char auxTest[100]; //criação do buffer que recebe os dados
-
+    uint8_t auxTest[100]; //criação do buffer que recebe os dados
+	for(int i =0; i<100; i++){
+	auxTest[i] = 0;
+	}
     int tamanho = file_read_data(g_fd, (void*)auxTest, 100); //função para receber resposta da nodeMCU
 
     if(tamanho < 0){
         auxTest[0] = 0x09;
         print_display(auxTest);
-        return;
+        return; file_write_data(g_fd,&auxTest[0],sizeof(auxTest)); //função para envio do vetor
+
     }else{
         auxTest[tamanho] = '\0';
     }
-
+	printf("%c", auxTest[0]);
     print_display(auxTest);
 }
 
 int main(void) {
-    printf("Iniciando aplicação...\r\n");
+    printf("Sensores NodeMCU\r\n");
 
     open_serial_port(); //abertura da porta serial para comunicação
 
@@ -206,59 +240,74 @@ int main(void) {
     
     //variáveis para auxilio do menu
     int aux=0; 
-    int menu=0; 
+   // int menu=0; 
     
     char *ptr; //ponteiro de char para ser utilizado na função strtol
     long value; //valor do resultado da transformação de vetor para long
-    unsigned char comando; 
-        wiringPiSetup(); //configuração do display        
-    lcd = lcdInit (2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0, 0); //pinando o display
+    uint8_t comando;  
+    wiringPiSetup(); 	
+    lcd = lcdInit (2, 16, 4, LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7, 0, 0, 0, 0); //pinando o display	 
+
+
+
+while(aux==0){
+
+     while(buttonLoop==0){
+  	scanButton(BUTTON3);
+	scanButton(BUTTON2);
+     }
+
+    printf("menu :%d\n" ,menu);
+    switch(menu){
+    	//Temperatura
+    	case 1:  
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x02;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);
+	break;
+	
+	//Umidade
+	case 2:
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x01;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);  
+	break;
     
-    while(aux==0){ 
-	    scanButton(BUTTON3);
-	    //caso para enviar o valor do tempo para o nodeMCU
-                sleep(2);
-                comando = 0x08;
-                lcdPosition(lcd,0,0);
-                send_to_node(comando);
-                sleep(2);
-                receive_from_node();
-                sleep(2);
-	    
-	     lcdClear(lcd);
-	    //caso para verificar a situação do nodeMCU
-                lcdPosition(lcd,0,0);
-                comando = 0x03;
-                send_to_node(comando);
-                sleep(2);
-                receive_from_node();
-                sleep(2);
-            //caso para realizar a leitura do sensor analogico
-                lcdPosition(lcd,7,0);
-                comando = 0x04;
-                send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
-                sleep(2);
-                receive_from_node();
-                sleep(2);
-  	//caso para realizar a leitura do sensor de umidade 
-                lcdPosition(lcd,0,1);
-		comando = 0x01;  
-                send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
-                sleep(2);
-                receive_from_node();
-	    	sleep(2);
-	//caso para realizar a leitura do sensor de temperatura
-                lcdPosition(lcd,7,1);
-		comando = 0x02;  
-                send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
-                sleep(2);
-                receive_from_node();    
-	    
-	     lcdClear(lcd);
+        //Potenciometro
+    	case 3:
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x04;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);    
+	break;
+	default:
+	  lcdClear(lcd);
+	  lcdPosition(lcd,0,0);
+    	  comando = 0x08;
+    	  send_to_node(comando); //leitura do resultado obtido pela comunicação com a NodeMCU
+	  sleep(1);
+	  receive_from_node();
+	  sleep(1);
+	  menu=0;
+	break;
+    
     }
     
-	    
+    buttonLoop=0;	   
+
+}
+    
     close_serial_port(); //encerrando a porta serial de comunicação
 
     return 0; //encerramento do programa
 }
+
+
