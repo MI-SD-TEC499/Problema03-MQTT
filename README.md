@@ -249,7 +249,7 @@ Para executar o teste com o broker online deve substituir a linha do broker do l
   const pahoHandler = new PahoHandler('test.mosquitto.org', 8080, "clientjs");
 ```
 
-Nos dois casos a exibição será a mesma, porém para testes de funcionalidade é um pouco diferente. Utilizando o broker do laboratório, as informações serão recebidas através da conexão com o nodeMCU, definindo o subscribe como `pbl3/envia` e o topic como `pbl3/recebe`, com o send mensage com um valor inteiro para definir o tempo de requisição. Para o teste com o broker remoto informado acima é necessário colocar o tópico de subscribe e o topic com os mesmo valores por exemplo: `pbl3/teste` e o valor de send mensage com os valores para a temperatura, umidade, potênciomentro e intervalo, separados por ";".
+Nos dois casos a exibição será a mesma, porém para testes de funcionalidade é um pouco diferente. Utilizando o broker do laboratório, as informações serão recebidas através da conexão com o nodeMCU, definindo o subscribe como `pbl3/envia` e o topic como `pbl3/recebe`, com o send mensage com um valor inteiro para definir o tempo de requisição. Para o teste com o broker remoto informado acima é necessário colocar o tópico de subscribe e o topic com os mesmo valores por exemplo: `pbl3/teste` e o valor de send mensage com os valores para a temperatura, umidade, potenciômetro e intervalo de tempo, separados por ";".
 
 ![image](https://user-images.githubusercontent.com/38412142/208090455-0b8253bf-9412-4eaa-9d5c-3fa6c3ab41fe.png)
 
