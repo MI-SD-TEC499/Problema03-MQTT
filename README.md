@@ -213,8 +213,6 @@ Nos dois casos a exibição será a mesma, porém para testes de funcionalidade 
 
 Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exibir os valores de acordo com a variação que acontecer na variáveis de temperatura, umidade e potênciomentro.
 
-![image](https://user-images.githubusercontent.com/38465439/206821148-187f3705-790c-4624-b328-65a86795e24c.png)
-
 ![image](https://user-images.githubusercontent.com/38412142/208090723-fc5084ed-274c-4075-8eb5-73f3d1609b6a.png)
 
 ## 6. Referências
