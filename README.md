@@ -215,6 +215,43 @@ Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exib
 
 ![image](https://user-images.githubusercontent.com/38412142/208090723-fc5084ed-274c-4075-8eb5-73f3d1609b6a.png)
 
+### 5.1 Interface local
+
+Testamos a interface local comparando os valores enviados pela node com os valores exibidos no display.
+
+Temperatura sem o botão pressionado :
+
+![tempOff](https://user-images.githubusercontent.com/111393549/208099701-2597fc27-bbe8-4c17-8477-cfb54c336080.jpeg)
+
+
+Temperatura com o botão pressionado :
+
+![tempOn](https://user-images.githubusercontent.com/111393549/208099796-aaa0642d-9756-499c-8824-cfc0576d5ea1.jpeg)
+
+
+Umidade(sem possibilidade de "ON" devido ao botão associado não estar funcionado corretamente) :
+
+![umidOff](https://user-images.githubusercontent.com/111393549/208099521-b3ea6a6e-fdd3-43a5-b8f4-bee2228a4b26.jpeg)
+
+
+Potenciômetro:
+
+![pot0](https://user-images.githubusercontent.com/111393549/208099737-e6d48592-8d53-44a0-ba08-82571ef5acb5.jpeg)
+
+
+Tempo : 
+
+![tempoNPress](https://user-images.githubusercontent.com/111393549/208099886-197cb0fd-080a-47e7-9e65-54b1f518dfa9.jpeg)
+
+
+Tempo após apertar o botão :
+
+![tempoPress](https://user-images.githubusercontent.com/111393549/208099413-607dce20-6211-4384-ae1b-099fb12a6c5b.jpeg)
+
+
+
+
+
 ## 6. Referências
 
 * [Wiring pi](http://wiringpi.com/)
