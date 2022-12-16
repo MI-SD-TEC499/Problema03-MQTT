@@ -30,11 +30,11 @@ comunicação com o `broker` :
 ```c
 #include <PubSubClient.h>
 const char mqtt_broker = "10.0.0.101";    //Host do broket
-const char topic = "pbl3/envia";            //Topico a ser publicado
-const char subtopic = "pbl3/recebe";       //Topico a ser subscrito 
-const char mqtt_username = "aluno";         //Usuario
-const char mqtt_password = "@luno123";     //Senha
-const int mqtt_port = 1883;                //Porta
+const char topic = "pbl3/envia";          //Topico a ser publicado
+const char subtopic = "pbl3/recebe";      //Topico a ser subscrito 
+const char mqtt_username = "aluno";       //Usuario
+const char mqtt_password = "@luno123";    //Senha
+const int mqtt_port = 1883;               //Porta
 ```
 Devido aos problemas encontrados com a biblioteca `mosquitto` , foi definido que a NodeMCU funcionaria como "ponte" entre a raspberry Pi e o broker 
 (usamos a UART para a troca de informações entre a Raspberry e a NodeMCU), para a implementação do MQTT foi utilizada
