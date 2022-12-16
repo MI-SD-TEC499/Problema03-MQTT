@@ -207,13 +207,15 @@ Para executar o teste com o broker online deve substituir a linha do broker do l
   const pahoHandler = new PahoHandler('test.mosquitto.org', 8080, "clientjs");
 ```
 
-Nos dois casos a exibição será a mesma, porém para testes de funcionalidade é um pouco diferente. Utilizando o broker do laboratório, as informações serão recebidas através da conexão com o nodeMCU, definindo o subscribe como `pbl3/envia` e o topic como `pbl3/recebe`, com o send mensage com um valor inteiro para definir o tempo de requisição. Para o teste com o broker remoto informado acima é necessário colocar o tópico de subscribe e o topic com os mesmo valores por exemplo: `pbl3/teste` e o valor de send mensage com os valores para a temperatura, umidade e potênciomentro, separados por ";".
+Nos dois casos a exibição será a mesma, porém para testes de funcionalidade é um pouco diferente. Utilizando o broker do laboratório, as informações serão recebidas através da conexão com o nodeMCU, definindo o subscribe como `pbl3/envia` e o topic como `pbl3/recebe`, com o send mensage com um valor inteiro para definir o tempo de requisição. Para o teste com o broker remoto informado acima é necessário colocar o tópico de subscribe e o topic com os mesmo valores por exemplo: `pbl3/teste` e o valor de send mensage com os valores para a temperatura, umidade, potênciomentro e intervalo, separados por ";".
 
-![image](https://user-images.githubusercontent.com/38465439/206821051-e6896cce-d9bb-4332-8a57-f4deedaf1576.png)
+![image](https://user-images.githubusercontent.com/38412142/208090455-0b8253bf-9412-4eaa-9d5c-3fa6c3ab41fe.png)
 
 Nos dois processos o resultado de exibição será o mesmo, o gráfico irá exibir os valores de acordo com a variação que acontecer na variáveis de temperatura, umidade e potênciomentro.
 
 ![image](https://user-images.githubusercontent.com/38465439/206821148-187f3705-790c-4624-b328-65a86795e24c.png)
+
+![image](https://user-images.githubusercontent.com/38412142/208090723-fc5084ed-274c-4075-8eb5-73f3d1609b6a.png)
 
 ## 6. Referências
 
