@@ -54,7 +54,7 @@ client.subscribe(topic);
 Tanto `client.subscribe` quanto `client.publish` são da biblioteca `pubsubclient.h` . Vale lembrar que para receber as atualizações nos tópicos inscritos, usamos a função `client.loop`.
 ### 3.2 Raspberry pi zero
 
-A raspberry PI continua usando o display LCD para a exibição dos dados recebidos da NodeMCU(estado atual do botão, valor do potenciômetro e intervalo de tempo), os valores são exibidos de forma sequencial e são atualizados com base no delay(em segundos), que pode ser alterado pelo usuario utilizando os botões para dimunuir/aumentar o tempo do intervalo.
+A raspberry PI continua usando o display LCD para a exibição dos dados recebidos da NodeMCU(estado atual do botão, valor do potenciômetro e intervalo de tempo), os valores são exibidos de forma sequencial, e são alterados utilizando os botões (botão 3 para mudar categoria e o botão 2 para incrementar o tempo).
 
 ```c
 while(aux==0){
